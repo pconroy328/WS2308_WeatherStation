@@ -46,7 +46,7 @@ extern  void    readIniFile( WS2308System_t * );
 
 
 // ------------------------------------------------------------------------------------
-static  char                *version = "v4.0.0 [ JSON based MQTT packets ]";
+static  char                *version = "v4.0.1 [ JSON based MQTT packets ]";
 int                         debugLevel = 0;
 
 //
@@ -553,7 +553,7 @@ int parseCommandLineArgs (int argc, char **argv)
     
     //
     // getopt() has an issue on the Raspberry Pi!
-    while ( ((ch = getopt( argc, argv, "p:l:s:t:m:v:ncri:x" )) != -1) && (ch != 255))
+    while ( ((ch = getopt( argc, argv, "p:l:s:t:m:v:ncrij:x" )) != -1) && (ch != 255))
        switch (ch) {
             case 'l':   aSystem.readInterval = atoi( optarg );
                         break;
