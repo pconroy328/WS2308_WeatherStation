@@ -1,0 +1,126 @@
+#
+# Generated Makefile - do not edit!
+#
+# Edit the Makefile in the project folder instead (../Makefile). Each target
+# has a -pre and a -post target defined where you can add customized code.
+#
+# This makefile implements configuration specific macros and targets.
+
+
+# Environment
+MKDIR=mkdir
+CP=cp
+GREP=grep
+NM=nm
+CCADMIN=CCadmin
+RANLIB=ranlib
+CC=gcc
+CCC=g++
+CXX=g++
+FC=gfortran
+AS=as
+
+# Macros
+CND_PLATFORM=GNU-Linux-x86
+CND_DLIB_EXT=so
+CND_CONF=Debug
+CND_DISTDIR=dist
+CND_BUILDDIR=build
+
+# Include project Makefile
+include Makefile
+
+# Object Directory
+OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
+
+# Object Files
+OBJECTFILES= \
+	${OBJECTDIR}/database.o \
+	${OBJECTDIR}/inifile.o \
+	${OBJECTDIR}/logger.o \
+	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/mqtt.o \
+	${OBJECTDIR}/stats.o \
+	${OBJECTDIR}/ws2300.o
+
+
+# C Compiler Flags
+CFLAGS=
+
+# CC Compiler Flags
+CCFLAGS=
+CXXFLAGS=
+
+# Fortran Compiler Flags
+FFLAGS=
+
+# Assembler Flags
+ASFLAGS=
+
+# Link Libraries and Options
+LDLIBSOPTIONS=-L\"${`mysql_config\ --libs`}\" -lm /usr/local/lib/libmosquitto.so /usr/local/lib/libinifiler.a -lmysqlclient ../MovingAverage_Lib/dist/Debug/GNU-Linux-x86/libmovingaverage_lib.a
+
+# Build Targets
+.build-conf: ${BUILD_SUBPROJECTS}
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ws2308_mqtt
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ws2308_mqtt: /usr/local/lib/libmosquitto.so
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ws2308_mqtt: /usr/local/lib/libinifiler.a
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ws2308_mqtt: ../MovingAverage_Lib/dist/Debug/GNU-Linux-x86/libmovingaverage_lib.a
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ws2308_mqtt: ${OBJECTFILES}
+	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
+	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ws2308_mqtt ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/database.o: database.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -D_POSIX_SOURCE -D__USE_XOPEN -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/database.o database.c
+
+${OBJECTDIR}/inifile.o: inifile.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -D_POSIX_SOURCE -D__USE_XOPEN -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/inifile.o inifile.c
+
+${OBJECTDIR}/logger.o: logger.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -D_POSIX_SOURCE -D__USE_XOPEN -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/logger.o logger.c
+
+${OBJECTDIR}/main.o: main.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -D_POSIX_SOURCE -D__USE_XOPEN -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
+
+${OBJECTDIR}/mqtt.o: mqtt.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -D_POSIX_SOURCE -D__USE_XOPEN -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/mqtt.o mqtt.c
+
+${OBJECTDIR}/stats.o: stats.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -D_POSIX_SOURCE -D__USE_XOPEN -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/stats.o stats.c
+
+${OBJECTDIR}/ws2300.o: ws2300.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -D_POSIX_SOURCE -D__USE_XOPEN -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ws2300.o ws2300.c
+
+# Subprojects
+.build-subprojects:
+
+# Clean Targets
+.clean-conf: ${CLEAN_SUBPROJECTS}
+	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ws2308_mqtt
+
+# Subprojects
+.clean-subprojects:
+
+# Enable dependency checking
+.dep.inc: .depcheck-impl
+
+include .dep.inc
