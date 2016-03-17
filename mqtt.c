@@ -535,21 +535,21 @@ int    MQTT_createWeatherStatus (WS2308System_t *aSystem, weatherDatum_t *datum)
         
     } else {
         length = snprintf( buffer, sizeof buffer,
-                "%s { \"datetime\":\"%s\" ,          \
-                      \"tendency\":\"%s\" ,         \
-                      \"forecast\":\"%s\" ,          \
-                      \"indoorTemp\":%3.1f ,         \
-                      \"indoorHumdity\":%3.1f ,      \
-                      \"outdoorTemp\":%3.1f ,        \
-                      \"outdoorHumdity\":%3.1f ,     \
-                      \"outdoorPressure\":%3.1f ,    \
-                      \"outdoorWindChill\":%3.1f ,   \
-                      \"windSpeed\":%3.1f ,          \
-                      \"windHeading\":%3.1f ,        \
-                      \"rainLastHour\":%2.2f ,       \
-                      \"rainLastDay\":%2.2f ,        \
-                      \"rainTotal\":%2.2f ,          \
-                      \"stationDatel\":\"%s\" ,      \
+                "%s { \"datetime\":\"%s\" ,\
+                      \"tendency\":\"%s\" ,\
+                      \"forecast\":\"%s\" ,\
+                      \"indoorTemp\":%3.1f ,\
+                      \"indoorHumdity\":%3.1f ,\
+                      \"outdoorTemp\":%3.1f ,\
+                      \"outdoorHumdity\":%3.1f ,\
+                      \"outdoorPressure\":%3.1f ,\
+                      \"outdoorWindChill\":%3.1f ,\
+                      \"windSpeed\":%3.1f ,\
+                      \"windHeading\":%3.1f ,\
+                      \"rainLastHour\":%2.2f ,\
+                      \"rainLastDay\":%2.2f ,\
+                      \"rainTotal\":%2.2f ,\
+                      \"stationDatel\":\"%s\" ,\
                       \"stationTime\":\"%s\" }",
                 combinedTopic,
                 getCurrentDateTime(),
