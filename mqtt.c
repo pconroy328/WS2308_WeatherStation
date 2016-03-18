@@ -263,7 +263,7 @@ char    *getCurrentDateTime (void)
             if (useISO8601) {
                 strftime( currentDateTimeBuffer,
                     sizeof currentDateTimeBuffer,
-                    "%FT%TZ",
+                    "%FT%T%z",
                     tmPtr );
                       
             } else {
@@ -540,7 +540,7 @@ int    MQTT_createWeatherStatus (WS2308System_t *aSystem, weatherDatum_t *datum)
 \"outdoorTemp\":%3.1f ,\"outdoorHumdity\":%3.1f ,\"outdoorPressure\":%3.1f ,\"outdoorWindChill\":%3.1f ,\
 \"windSpeed\":%3.1f ,\"windHeading\":%3.1f ,\
 \"rainLastHour\":%2.2f ,\"rainLastDay\":%2.2f ,\"rainTotal\":%2.2f ,\
-\"stationDatel\":\"%s\" ,\"stationTime\":\"%s\" }",
+\"stationDate\":\"%s\" ,\"stationTime\":\"%s\" }",
                 combinedTopic,
                 getCurrentDateTime(),
                 

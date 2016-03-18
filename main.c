@@ -46,7 +46,7 @@ extern  void    readIniFile( WS2308System_t * );
 
 
 // ------------------------------------------------------------------------------------
-static  char                *version = "v4.0.1 [ JSON based MQTT packets ]";
+static  char                *version = "v4.0.2 [ JSON based MQTT packets ]";
 int                         debugLevel = 0;
 
 //
@@ -632,6 +632,7 @@ int main(int argc, char** argv)
     aSystem.discardBadReadings = TRUE;
     aSystem.ignoreAtomicClock = FALSE;
     aSystem.MQTTUseJSON = FALSE;
+    aSystem.MQTTUseISO8601 = TRUE;
     
     absPressureCorrection = -3.0;
     strncpy( &(aSystem.logFileName[ 0 ]), "/tmp/ws2308.log", sizeof aSystem.logFileName );
