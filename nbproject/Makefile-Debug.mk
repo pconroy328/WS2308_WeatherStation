@@ -21,7 +21,7 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=GNU-Linux-x86
+CND_PLATFORM=GNU-Linux
 CND_DLIB_EXT=so
 CND_CONF=Debug
 CND_DISTDIR=dist
@@ -58,7 +58,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L\"${`mysql_config\ --libs`}\" -lm /usr/local/lib/libmosquitto.so /usr/local/lib/libinifiler.a -lmysqlclient ../MovingAverage_Lib/dist/Debug/GNU-Linux-x86/libmovingaverage_lib.a
+LDLIBSOPTIONS=-L\"${`mysql_config\ --libs`}\" -lm /usr/local/lib/libmosquitto.so /usr/local/lib/libinifiler.a -lmysqlclient ../MovingAverage_Lib/dist/Debug/GNU-Linux/libmovingaverage_lib.a
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -68,7 +68,7 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ws2308_mqtt: /usr/local/lib/libmosqui
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ws2308_mqtt: /usr/local/lib/libinifiler.a
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ws2308_mqtt: ../MovingAverage_Lib/dist/Debug/GNU-Linux-x86/libmovingaverage_lib.a
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ws2308_mqtt: ../MovingAverage_Lib/dist/Debug/GNU-Linux/libmovingaverage_lib.a
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ws2308_mqtt: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
