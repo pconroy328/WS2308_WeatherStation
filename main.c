@@ -46,7 +46,7 @@ extern  void    readIniFile( WS2308System_t * );
 
 
 // ------------------------------------------------------------------------------------
-static  char                *version = "v4.0.2 [ JSON based MQTT packets ]";
+static  char                *version = "v4.1 [ Topic inside JSON packets ]";
 int                         debugLevel = 0;
 
 //
