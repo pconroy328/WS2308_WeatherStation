@@ -3,7 +3,7 @@
     <type>org.netbeans.modules.cnd.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>WS2308_MQTT</name>
+            <name>WS2308_WeatherStation</name>
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>
             <cpp-extensions/>
@@ -11,7 +11,6 @@
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects>
                 <make-dep-project>/home/pconroy/Dropbox/NetBeansProjects/HomeAuto_SimpleSockets</make-dep-project>
-                <make-dep-project>../MovingAverage_Lib</make-dep-project>
             </make-dep-projects>
             <sourceRootList/>
             <confList>

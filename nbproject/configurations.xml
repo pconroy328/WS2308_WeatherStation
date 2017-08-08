@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="95">
+<configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -59,18 +59,7 @@
             <linkerLibFileItem>/usr/local/lib/libmosquitto.so</linkerLibFileItem>
             <linkerLibFileItem>/usr/local/lib/libinifiler.a</linkerLibFileItem>
             <linkerLibLibItem>mysqlclient</linkerLibLibItem>
-            <linkerLibProjectItem>
-              <makeArtifact PL="../MovingAverage_Lib"
-                            CT="3"
-                            CN="Debug"
-                            AC="true"
-                            BL="false"
-                            WD="../MovingAverage_Lib"
-                            BC="${MAKE}  -f Makefile CONF=Debug"
-                            CC="${MAKE}  -f Makefile CONF=Debug clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libmovingaverage_lib.a">
-              </makeArtifact>
-            </linkerLibProjectItem>
+            <linkerLibLibItem>movingaverage_lib</linkerLibLibItem>
           </linkerLibItems>
         </linkerTool>
         <requiredProjects>
