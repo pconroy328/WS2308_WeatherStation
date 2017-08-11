@@ -10,6 +10,8 @@ WorkingDirectory=/home/pconroy/WS2308_WeatherStation
 ExecStart=/home/pconroy/WS2308_WeatherStation/dist/Debug/GNU-Linux/ws2308_weatherstation
 StandardOutput=syslog
 StandardError=syslog
+Restart=always
+RestartSec=60
 
 [Install]
 WantedBy=default.target
