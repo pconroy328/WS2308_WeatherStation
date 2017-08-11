@@ -7,7 +7,7 @@ Type=simple
 User=pconroy
 Group=pconroy
 WorkingDirectory=/home/pconroy/WS2308_WeatherStation
-ExecStart=/home/pconroy/WS2308_WeatherStation/Debug/GNU-Linux/ws2308_mqtt
+ExecStart=/home/pconroy/WS2308_WeatherStation/dist/Debug/GNU-Linux/ws2308_weatherstation
 StandardOutput=syslog
 StandardError=syslog
 
