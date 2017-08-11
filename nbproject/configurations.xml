@@ -31,6 +31,7 @@
                    projectFiles="false">
       <itemPath>Makefile</itemPath>
       <itemPath>WS2308.ini</itemPath>
+      <itemPath>ws2308.service</itemPath>
     </logicalFolder>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>

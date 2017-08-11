@@ -4,10 +4,10 @@ After=syslog.target
 
 [Service]
 Type=simple
-User=myname
-Group=mygroup
+User=pconroy
+Group=pconroy
 WorkingDirectory=/home/pconroy/WS2308_WeatherStation
-ExecStart=/home/pconroy/WS2308_WeatherStation/dist/Debug/GNU-Linux/ws2308_mqtt
+ExecStart=/home/pconroy/WS2308_WeatherStation/Debug/GNU-Linux/ws2308_mqtt
 StandardOutput=syslog
 StandardError=syslog
 
