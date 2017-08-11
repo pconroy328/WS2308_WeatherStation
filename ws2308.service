@@ -1,0 +1,25 @@
+[Unit]
+Description=WS2308 Weather Station Service
+After=syslog.target
+
+[Service]
+Type=simple
+User=myname
+Group=mygroup
+WorkingDirectory=/home/pconroy/WS2308_WeatherStation
+ExecStart=/home/pconroy/WS2308_WeatherStation/dist/Debug/GNU-Linux/ws2308_mqtt
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=default.target
+
+#
+# After this the steps are:
+# Create the unit file in /etc/systemd/system (the file name
+# before .service will be the name you call to start/stop/restart the service)
+# Set file permissions to 644
+# Tell systemd that there is a new unit file: systemctl daemon-reload
+# Start service: systemctl start <service>
+# Check the service status: systemctl status <service>
+
