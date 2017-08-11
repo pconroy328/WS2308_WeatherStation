@@ -57,10 +57,10 @@
           </linkerAddLib>
           <linkerLibItems>
             <linkerLibStdlibItem>Mathematics</linkerLibStdlibItem>
-            <linkerLibFileItem>/usr/local/lib/libmosquitto.so</linkerLibFileItem>
             <linkerLibFileItem>/usr/local/lib/libinifiler.a</linkerLibFileItem>
             <linkerLibLibItem>mysqlclient</linkerLibLibItem>
-            <linkerLibLibItem>movingaverage_lib</linkerLibLibItem>
+            <linkerLibFileItem>/usr/local/lib/libmovingaverage_lib.a</linkerLibFileItem>
+            <linkerLibFileItem>/usr/lib/libmosquitto.so</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
         <requiredProjects>
