@@ -426,7 +426,7 @@ int     sendRainAlarm (WS2308System_t *aSystem, char *alarmMessage, double lastH
                 total );
     } else {
         length = snprintf( payload, sizeof payload,
-                "{ \"topic\":\"%s\",  \"version\":\"1.1\", \"dateTime\":\"%s\" , \"alarmMsg\":\"%s\" , \"lastHour\":%0.2f , \"lastDay\":%0.2f , \"total\":%0.2f }",
+                "{ \"topic\":\"%s\", \"version\":\"1.1\", \"dateTime\":\"%s\" , \"alarmMsg\":\"%s\" , \"lastHour\":%0.2f , \"lastDay\":%0.2f , \"total\":%0.2f }",
                 combinedTopic,
                 getCurrentDateTime(),
                 alarmMessage,

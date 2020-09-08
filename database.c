@@ -188,9 +188,9 @@ int     Database_closeDatabase (void)
 void    Database_setDefaults (WS2308System_t *aSystem)
 {
     Logger_LogInfo( "Database setting safe defaults..." );
-    strncpy( &(aSystem->db.hostName[0]), "192.168.1.11", MAX_INI_STRLEN );
-    strncpy( &(aSystem->db.userName[0]), "homeauto", MAX_INI_STRLEN );
-    strncpy( &(aSystem->db.password[0]), "homeauto", MAX_INI_STRLEN );
+    strncpy( &(aSystem->db.hostName[0]), "foo", MAX_INI_STRLEN );
+    strncpy( &(aSystem->db.userName[0]), "foo", MAX_INI_STRLEN );
+    strncpy( &(aSystem->db.password[0]), "foo", MAX_INI_STRLEN );
     strncpy( &(aSystem->db.schema[0]), "HomeAutomation", MAX_INI_STRLEN );
     
     aSystem->db.dropAlarmTable = FALSE;
