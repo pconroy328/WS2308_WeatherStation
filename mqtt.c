@@ -322,7 +322,7 @@ int     sendNumericAlarm (WS2308System_t *aSystem, char *alarmMessage, double te
         // Send the data in a JSON packet: ' { "topic": Topic, datetime":"<dt in ISO8601>", "alarmMsg":"<msg>", "value":<value> }'
         
         length = snprintf( payload, sizeof payload,
-                    "{ \"topic\":\"%s\", \"datetime\":\"%s\" , \"alarmMsg\":\"%s\" , \"value\":%0.1f }",
+                    "{ \"topic\":\"%s\", \"version\":\"1.1\", \"dateTime\":\"%s\" , \"alarmMsg\":\"%s\" , \"value\":%0.1f }",
                     combinedTopic,
                     getCurrentDateTime(),
                     alarmMessage,
@@ -374,7 +374,7 @@ int     sendWindAlarm (WS2308System_t *aSystem, char *alarmMessage, double winds
     
     } else {
         length = snprintf( payload, sizeof payload,
-                "{ \"topic\":\"%s\", \"datetime\":\"%s\" , \"alarmMsg\":\"%s\" , \"speed\":%0.1f , \"heading\":%03.1f }",
+                "{ \"topic\":\"%s\", \"version\":\"1.1\",  \"dateTime\":\"%s\" , \"alarmMsg\":\"%s\" , \"speed\":%0.1f , \"heading\":%03.1f }",
                 combinedTopic,
                 getCurrentDateTime(),
                 alarmMessage,
@@ -426,7 +426,7 @@ int     sendRainAlarm (WS2308System_t *aSystem, char *alarmMessage, double lastH
                 total );
     } else {
         length = snprintf( payload, sizeof payload,
-                "{ \"topic\":\"%s\", \"datetime\":\"%s\" , \"alarmMsg\":\"%s\" , \"lastHour\":%0.2f , \"lastDay\":%0.2f , \"total\":%0.2f }",
+                "{ \"topic\":\"%s\",  \"version\":\"1.1\", \"dateTime\":\"%s\" , \"alarmMsg\":\"%s\" , \"lastHour\":%0.2f , \"lastDay\":%0.2f , \"total\":%0.2f }",
                 combinedTopic,
                 getCurrentDateTime(),
                 alarmMessage,
@@ -535,7 +535,7 @@ int    MQTT_createWeatherStatus (WS2308System_t *aSystem, weatherDatum_t *datum)
         
     } else {
         length = snprintf( buffer, sizeof buffer,
-                "{ \"topic\":\"%s\", \"datetime\":\"%s\" ,\"tendency\":\"%s\" ,\"forecast\":\"%s\" ,\
+                "{ \"topic\":\"%s\", \"version\":\"1.1\", \"dateTime\":\"%s\" ,\"tendency\":\"%s\" ,\"forecast\":\"%s\" ,\
 \"indoorTemp\":%3.1f ,\"indoorHumdity\":%3.1f ,\
 \"outdoorTemp\":%3.1f ,\"outdoorHumdity\":%3.1f ,\"outdoorPressure\":%3.1f ,\"outdoorWindChill\":%3.1f ,\
 \"windSpeed\":%3.1f ,\"windHeading\":%3.1f ,\
