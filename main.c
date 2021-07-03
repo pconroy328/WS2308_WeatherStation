@@ -46,7 +46,7 @@ extern  void    readIniFile( WS2308System_t * );
 
 
 // ------------------------------------------------------------------------------------
-static  char                *version = "v4.1 [ Topic inside JSON packets ]";
+static  char                *version = "v4.2 [ Alarm Raining Bug ]";
 int                         debugLevel = 0;
 
 //
@@ -326,7 +326,7 @@ int     checkForAlarms (WS2308System_t *aSystem, weatherDatum_t *datum)
     // Do they want to know if it's raining?
     if (aSystem->Alarm_Raining) {
         if (datum->outdoor.rain.lastHour > 0)
-            alarmCode != ALARM_RAINING;
+            alarmCode |= ALARM_RAINING;
     }
     return alarmCode;
 }
