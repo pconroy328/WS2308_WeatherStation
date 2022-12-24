@@ -69,7 +69,7 @@ static  int                 useJSON = FALSE;
 
 //
 //  Those variables that can be set by the INI file are global to make things easier.
-int                         discardBadReadings = TRUE;
+//int                         discardBadReadings = TRUE;
 int                         readInterval;                  // every 16 seconds
 double                      absPressureCorrection;
 
@@ -661,6 +661,8 @@ int main(int argc, char** argv)
     
     if (!openWeatherStation()) {
         Logger_LogFatal( "Unable to open the weather station port. Shutting down.\n" );
+        MQTT_teardown();
+        Database_closeDatabase();
         exit( 0 );
     }
 
@@ -671,7 +673,7 @@ int main(int argc, char** argv)
         if (takeReading( ws2308, &dailyData[ numDailyReadings ] ) ) {
 
             readingMakesSense = TRUE;
-            if (discardBadReadings && !readingIsValid( &dailyData[ numDailyReadings ], weatherStatsPtr ))
+            if (aSystem.discardBadReadings && !readingIsValid( &dailyData[ numDailyReadings ], weatherStatsPtr ))
                 readingMakesSense = FALSE;
 
             if (readingMakesSense) {
