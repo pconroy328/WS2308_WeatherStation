@@ -15,7 +15,38 @@ static  MovingAverage_t *getRightMAPtr( weatherStats_t  *wsPtr, int statType );
 static  int             *getRightInvalidCountPtr( weatherStats_t *wsPtr, int statType );
 
 
+/* 
+* 21Dec2022 - unusally cold front. so cold, the remote sensor batteries must have lost power
+*             unit stopped sending.  So when it awkoke, we had readings of -5.0 and no 
+*             averages in the structures.
+*             We saw this in the log file:
+Checking Outside Temperature value: -4.180000
+INFO|2022-12-21 20:29:17|Discarding this value: -4.180000.  StatsType: 2.  Upper: -5.434000, Lower: -2.926000
+INFO|2022-12-21 20:29:17|Value: -4.180000  StatsType: 2  did not pass check and will not be added to the MA
+WARNING|2022-12-21 20:29:17|This value: -4.180000 failed the check - it will be discarded (statType: 2)
+WARNING|2022-12-21 20:29:17|Reading's outdoor temperature appears to be in error. Will be discarded. Value [-4.180000]
 
+
+        double  average = MovingAverage_GetAverage( maPtr );
+        
+        double  upperBound = average * (1.0 + (percentage / 100.0));
+        double  lowerBound = average * (1.0 - (percentage / 100.0));
+        
+
+So avg is -4.18.
+upper is   -4.18 * (1.0 + 0.3) =  -5.434
+lower is   -2.92
+
+then the test if -4.18 < -2.92 || -4.18 > -5.434
+   discard!
+
+
+if we did the abs in the test it's:
+
+if 4.18 < 2.92 
+which would not discard
+
+*/
 
 
 // -----------------------------------------------------------------------------
@@ -120,7 +151,7 @@ int     checkValue (weatherStats_t *wsPtr, int statType, double value, double pe
         }
         
         
-        if (value < lowerBound || value > upperBound) {
+        if (abs(value) < abs(lowerBound) || abs(value) > abs(upperBound)) {
             Logger_LogInfo( "Discarding this value: %f.  StatsType: %d.  Upper: %f, Lower: %f\n", value, statType, upperBound, lowerBound );
             return FALSE;
         } else {
