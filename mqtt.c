@@ -152,7 +152,7 @@ void    MQTT_initialize (WS2308System_t *aSystem)
     //
     // Example code shows the first parameter is "id" - but I'm getting EINVAL so I
     // switched it to NULL and it's working     
-    mosq = mosquitto_new( NULL, clean_session, NULL );
+    mosq = mosquitto_new( "WS2308-1", clean_session, NULL );
     
     if(!mosq) {
         Logger_LogWarning( "Unable to instantiate an MQTT instance!\n" );
