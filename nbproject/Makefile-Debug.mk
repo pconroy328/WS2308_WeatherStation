@@ -58,7 +58,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L\"${`mysql_config\ --libs`}\" -lm /usr/local/lib/libinifiler.a -lmysqlclient /usr/local/lib/libmovingaverage_lib.a /usr/lib/libmosquitto.so
+LDLIBSOPTIONS=-L\"${`mysql_config\ --libs`}\" -lm /usr/local/lib/libinifiler.a -lmysqlclient /usr/local/lib/libmovingaverage_lib.a /usr/lib/x86_64-linux-gnu/libmosquitto.solibmosquitto.so
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
