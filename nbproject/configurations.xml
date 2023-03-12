@@ -59,8 +59,8 @@
             <linkerLibStdlibItem>Mathematics</linkerLibStdlibItem>
             <linkerLibFileItem>/usr/local/lib/libinifiler.a</linkerLibFileItem>
             <linkerLibLibItem>mysqlclient</linkerLibLibItem>
-            <linkerLibFileItem>/usr/local/lib/libmovingaverage_lib.a</linkerLibFileItem>
-            <linkerLibFileItem>/usr/lib/libmosquitto.so</linkerLibFileItem>
+            <linkerLibFileItem>/usr/lib/x86_64-linux-gnu/libmosquitto.solibmovingaverage_lib.a</linkerLibFileItem>
+            <linkerLibFileItem>/usr/lib/x86_64-linux-gnu/libmosquitto.solibmosquitto.so</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
         <requiredProjects>
