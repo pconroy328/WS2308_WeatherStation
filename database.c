@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
-#include <mysql/mysql.h>
+#include <mariadb/mysql.h>
 
 
 #include "database.h"
