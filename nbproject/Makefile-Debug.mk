@@ -58,7 +58,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L\"${`mysql_config\ --libs`}\" -lm /usr/local/lib/libinifiler.a -lmysqlclient /usr/local/lib/libmovingaverage_lib.a /usr/lib/x86_64-linux-gnu/libmosquitto.solibmosquitto.so
+LDLIBSOPTIONS=-L\"${`mysql_config\ --libs`}\" -lm /usr/local/lib/libinifiler.a -lmysqlclient /usr/local/lib/libmovingaverage_lib.a /usr/lib/x86_64-linux-gnu/libmosquitto.so
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -68,7 +68,7 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ws2308_weatherstation: /usr/local/lib
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ws2308_weatherstation: /usr/local/lib/libmovingaverage_lib.a
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ws2308_weatherstation: /usr/lib/libmosquitto.so
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ws2308_weatherstation: /usr/lib/x86_64-linux-gnu/libmosquitto.so
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ws2308_weatherstation: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
