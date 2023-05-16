@@ -19,7 +19,7 @@
 #include <sys/file.h>
 
 #include "ws2300.h"
-#include "logger.h"
+#include "log4c.h"
 
 
 #define BIT_IS_SET(var,pos) ((var) & (1<<(pos)))
@@ -104,84 +104,84 @@ static  int         DEBUG   = 0;
  * Returns: Handle to the weatherstation (type WEATHERSTATION)
  *
  ********************************************************************/
-WEATHERSTATION open_weatherstation(char *device)
+WEATHERSTATION open_weatherstation (char *device)
 {
-	WEATHERSTATION ws2300;
-	struct termios adtio;
-	int portstatus;
+    WEATHERSTATION ws2300;
+    struct termios adtio;
+    int portstatus;
 
-	//Setup serial port
+    //Setup serial port
 
-	if ((ws2300 = open(device, O_RDWR | O_NOCTTY)) < 0)
-	{
-		Logger_LogError( "Unable to open serial device %s\n", device );
-		//exit(EXIT_FAILURE);
+    if ((ws2300 = open(device, O_RDWR | O_NOCTTY)) < 0)
+    {
+        Logger_LogError( "Unable to open serial device %s\n", device );
+        //exit(EXIT_FAILURE);
         return 0;
-	}
+    }
 
-	//if ( flock(ws2300, LOCK_EX) < 0 ) {
-	//	perror("\nSerial device is locked by other program\n");
-	//	exit(EXIT_FAILURE);
-	// }
+    //if ( flock(ws2300, LOCK_EX) < 0 ) {
+    //	perror("\nSerial device is locked by other program\n");
+    //	exit(EXIT_FAILURE);
+    // }
 
-	//We want full control of what is set and simply reset the entire adtio struct
-	memset(&adtio, 0, sizeof(adtio));
+    //We want full control of what is set and simply reset the entire adtio struct
+    memset(&adtio, 0, sizeof(adtio));
 
-	//tcgetattr(ws2300, &adtio);   // Commented out and replaced by the memset above
+    //tcgetattr(ws2300, &adtio);   // Commented out and replaced by the memset above
 
-	// Serial control options
-	adtio.c_cflag &= ~PARENB;      // No parity
-	adtio.c_cflag &= ~CSTOPB;      // One stop bit
-	adtio.c_cflag &= ~CSIZE;       // Character size mask
-	adtio.c_cflag |= CS8;          // Character size 8 bits
-	adtio.c_cflag |= CREAD;        // Enable Receiver
-	adtio.c_cflag &= ~HUPCL;       // No "hangup"
-	adtio.c_cflag &= ~CRTSCTS;     // No flowcontrol
-	adtio.c_cflag |= CLOCAL;       // Ignore modem control lines
+    // Serial control options
+    adtio.c_cflag &= ~PARENB;      // No parity
+    adtio.c_cflag &= ~CSTOPB;      // One stop bit
+    adtio.c_cflag &= ~CSIZE;       // Character size mask
+    adtio.c_cflag |= CS8;          // Character size 8 bits
+    adtio.c_cflag |= CREAD;        // Enable Receiver
+    adtio.c_cflag &= ~HUPCL;       // No "hangup"
+    adtio.c_cflag &= ~CRTSCTS;     // No flowcontrol
+    adtio.c_cflag |= CLOCAL;       // Ignore modem control lines
 
-	// Baudrate, for newer systems
-	cfsetispeed(&adtio, BAUDRATE);
-	cfsetospeed(&adtio, BAUDRATE);
+    // Baudrate, for newer systems
+    cfsetispeed(&adtio, BAUDRATE);
+    cfsetospeed(&adtio, BAUDRATE);
 
-	// Serial local options: adtio.c_lflag
-	// Raw input = clear ICANON, ECHO, ECHOE, and ISIG
-	// Disable misc other local features = clear FLUSHO, NOFLSH, TOSTOP, PENDIN, and IEXTEN
-	// So we actually clear all flags in adtio.c_lflag
-	adtio.c_lflag = 0;
+    // Serial local options: adtio.c_lflag
+    // Raw input = clear ICANON, ECHO, ECHOE, and ISIG
+    // Disable misc other local features = clear FLUSHO, NOFLSH, TOSTOP, PENDIN, and IEXTEN
+    // So we actually clear all flags in adtio.c_lflag
+    adtio.c_lflag = 0;
 
-	// Serial input options: adtio.c_iflag
-	// Disable parity check = clear INPCK, PARMRK, and ISTRIP
-	// Disable software flow control = clear IXON, IXOFF, and IXANY
-	// Disable any translation of CR and LF = clear INLCR, IGNCR, and ICRNL
-	// Ignore break condition on input = set IGNBRK
-	// Ignore parity errors just in case = set IGNPAR;
-	// So we can clear all flags except IGNBRK and IGNPAR
-	adtio.c_iflag = IGNBRK|IGNPAR;
+    // Serial input options: adtio.c_iflag
+    // Disable parity check = clear INPCK, PARMRK, and ISTRIP
+    // Disable software flow control = clear IXON, IXOFF, and IXANY
+    // Disable any translation of CR and LF = clear INLCR, IGNCR, and ICRNL
+    // Ignore break condition on input = set IGNBRK
+    // Ignore parity errors just in case = set IGNPAR;
+    // So we can clear all flags except IGNBRK and IGNPAR
+    adtio.c_iflag = IGNBRK|IGNPAR;
 
-	// Serial output options
-	// Raw output should disable all other output options
-	adtio.c_oflag &= ~OPOST;
+    // Serial output options
+    // Raw output should disable all other output options
+    adtio.c_oflag &= ~OPOST;
 
-	adtio.c_cc[VTIME] = 10;		// timer 1s
-	adtio.c_cc[VMIN] = 0;		// blocking read until 1 char
+    adtio.c_cc[VTIME] = 10;		// timer 1s
+    adtio.c_cc[VMIN] = 0;		// blocking read until 1 char
 
-	if (tcsetattr(ws2300, TCSANOW, &adtio) < 0)
-	{
-		Logger_LogError( "Unable to initialize serial device\n" ); 
-		// exit(0);
+    if (tcsetattr(ws2300, TCSANOW, &adtio) < 0)
+    {
+        Logger_LogError( "Unable to initialize serial device\n" ); 
+        // exit(0);
         return 0;
-	}
+    }
 
-	tcflush(ws2300, TCIOFLUSH);
+    tcflush(ws2300, TCIOFLUSH);
 
-	// Set DTR low and RTS high and leave other ctrl lines untouched
+    // Set DTR low and RTS high and leave other ctrl lines untouched
 
-	ioctl(ws2300, TIOCMGET, &portstatus);	// get current port status
-	portstatus &= ~TIOCM_DTR;
-	portstatus |= TIOCM_RTS;
-	ioctl(ws2300, TIOCMSET, &portstatus);	// set current port status
+    ioctl(ws2300, TIOCMGET, &portstatus);	// get current port status
+    portstatus &= ~TIOCM_DTR;
+    portstatus |= TIOCM_RTS;
+    ioctl(ws2300, TIOCMSET, &portstatus);	// set current port status
 
-	return ws2300;
+    return ws2300;      // 15May2023 - why am I returning something on the stack?
 }
 
 /********************************************************************

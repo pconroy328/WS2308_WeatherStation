@@ -24,6 +24,7 @@ extern  int     MQTT_sendReceive( WS2308System_t *aSystem );
 extern  int     MQTT_createWeatherStatus( WS2308System_t *aSystem, weatherDatum_t *weatherRec );
 extern  int     MQTT_createWeatherAlarm( WS2308System_t *aSystem, int errorCode, weatherDatum_t *weatherRec );
 extern  int     MQTT_handleError( WS2308System_t *aSystem, int errorCode );
+extern  int     MQTT_Publish( const char *topic, const char *payload, const int payloadLength, const int retainFlag );
 
 
 

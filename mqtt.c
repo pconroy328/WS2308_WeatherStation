@@ -33,7 +33,7 @@
 #include <unistd.h>
 
 #include "mqtt.h"
-#include "logger.h"
+#include "log4c.h"
 
 static  int                     MQTT_Connected;
 static  struct  mosquitto       *mosq = NULL;
@@ -151,7 +151,7 @@ void    MQTT_initialize (WS2308System_t *aSystem)
     
     //
     // Example code shows the first parameter is "id" - but I'm getting EINVAL so I
-    // switched it to NULL and it's working     
+    // switched it to NULL and it's working. If first param is NULL, CleanSession must be true
     mosq = mosquitto_new( "WS2308-1", clean_session, NULL );
     
     if(!mosq) {
@@ -582,6 +582,33 @@ int    MQTT_createWeatherStatus (WS2308System_t *aSystem, weatherDatum_t *datum)
     return result;
 }
 
+// -----------------------------------------------------------------------------
+int MQTT_Publish (const char *topic, const char *payload, const int payloadLength, const int retainFlag)
+{
+    int     result;
+    int     messageID;
+    
+    if (!MQTT_Connected) {
+        Logger_LogWarning( "MQTT_Publish() -- Calling publish() on a DISCONNECTED broker. Nothing happens.\n" );
+        return MQTT_NOT_CONNECTED;
+    }
+    
+    result = mosquitto_publish( mosq, 
+                            &messageID, 
+                            topic,
+                            payloadLength, 
+                            payload, 
+                            0,                  // QoS
+                            retainFlag );
+    
+    if (result != 0) {
+        Logger_LogError( "MQTT_publish:: - Failure. Result: %\n", result );
+    } else {
+        Logger_LogInfo( "MQTT_publish:: - Success. Message [%d]:[%s]\n", messageID, payload );
+    }
+    
+    return result;    
+}
 
     
     

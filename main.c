@@ -8,6 +8,8 @@
  *      Using mosquitto v1.2 - expecting to see it in /usr/local/include and 
  *      /usr/local/lib
  * 
+ * 11May2023 - Adding Home Assistant Integration
+ * 
  */
 // #define _POSIX_SOURCE
 
@@ -25,10 +27,11 @@
 
 #include "ws2300.h"
 #include "mqtt.h"
-#include "logger.h"
+#include "log4c.h"
 #include "ws_structs.h"
 #include "database.h"
 #include "stats.h"
+#include "homeassistant.h"
 
 
 // WHEN STARTED AT BOOT - IT CANNOT FIND THE INI FILE
@@ -46,7 +49,7 @@ extern  void    readIniFile( WS2308System_t * );
 
 
 // ------------------------------------------------------------------------------------
-static  char                *version = "v4.2 [ Alarm Raining Bug ]";
+static  char                *version = "v5.0 [ Home Assistant ]";
 int                         debugLevel = 0;
 
 //
@@ -69,7 +72,7 @@ static  int                 useJSON = FALSE;
 
 //
 //  Those variables that can be set by the INI file are global to make things easier.
-//int                         discardBadReadings = TRUE;
+int                         discardBadReadings = TRUE;
 int                         readInterval;                  // every 16 seconds
 double                      absPressureCorrection;
 
@@ -163,15 +166,15 @@ int     openWeatherStation (void)
     //
     ws2308 = open_weatherstation( aSystem.ws2308DeviceName );
 
-    if (reset_06( ws2308 )) {
+    if (ws2308 != 0 && reset_06( ws2308 )) {
         date[ 0 ] = '\0';
         time[ 0 ] = '\0';
         read_date( ws2308, date );
         read_time( ws2308, time );
 
-        //logMsg( "Ready" );
-        //sprintf( aBuffer, "System date is: %s", read_date( ws2308, date ) );    logMsg( aBuffer );
-        //sprintf( aBuffer, "System time is: %s", read_time( ws2308, time ) );    logMsg( aBuffer );
+        Logger_LogInfo( "Station online and Ready" );
+        Logger_LogInfo( "System date is: %s", date );
+        Logger_LogInfo( "System time is: %s", time );
 
         if (date[ 0 ] != '\0' && time[ 0 ] != '\0')
             portIsOpen = TRUE;
@@ -519,6 +522,8 @@ int showHelp()
     puts( "-c                 cache readings locally" );
     puts( "-r                 do NOT discard bad readings - just take what comes" );
     puts( "-f <fileName>      write debug and log data to this file" );
+    puts( "-z                 send data to Home Assistant" );
+    puts( "-y                 do NOT use a database" );
 
 
     puts( "-i <fileName>      pull INI parameters from this file" );
@@ -553,7 +558,7 @@ int parseCommandLineArgs (int argc, char **argv)
     
     //
     // getopt() has an issue on the Raspberry Pi!
-    while ( ((ch = getopt( argc, argv, "p:l:s:t:m:v:ncrij:x" )) != -1) && (ch != 255))
+    while ( ((ch = getopt( argc, argv, "p:l:s:t:m:v:ncrij:xyz" )) != -1) && (ch != 255))
        switch (ch) {
             case 'l':   aSystem.readInterval = atoi( optarg );
                         break;
@@ -592,7 +597,13 @@ int parseCommandLineArgs (int argc, char **argv)
             case 'f':   strncpy( &(aSystem.logFileName[0]), optarg, sizeof( aSystem.logFileName ) );
                         break;
 
-           default:     showHelp();
+            case 'y':   aSystem.logToDatabase = FALSE;
+                        break;
+                        
+            case 'z':   aSystem.sendToHomeAssistant = TRUE;
+                        break;
+             
+            default:    showHelp();
                         exit( 1 );
                         break;
         }
@@ -620,7 +631,7 @@ int main(int argc, char** argv)
 
     //
     //  Initialize defaults
-    //strcpy( &(aSystem.MQTTServerName[ 0 ]), "192.168.1.11" );
+    strcpy( &(aSystem.MQTTServerName[ 0 ]), "gx100.local" );
     strcpy( &(aSystem.MQTTParentTopic[ 0 ]), "WS2308" );
     strcpy( &(aSystem.MQTTStatusTopic[ 0 ]), "STATUS" );
     strcpy( &(aSystem.MQTTAlarmTopic[ 0 ]), "ALARM" );
@@ -641,6 +652,9 @@ int main(int argc, char** argv)
     
     MQTT_setDefaults( &aSystem, aSystem.MQTTServerName );
     Database_setDefaults( &aSystem );
+    
+    aSystem.sendToHomeAssistant = FALSE;
+    aSystem.logToDatabase = FALSE;
 
    
     //
@@ -652,17 +666,21 @@ int main(int argc, char** argv)
     if (!ignoreIniFile)
         readIniFile( &aSystem );
 
-   
+    aSystem.debugLevel = 5;
     Logger_Initialize( aSystem.logFileName, aSystem.debugLevel );
     Logger_LogInfo( "WS2308 Weather Station Data Reader Version: %s\n", version );
     
     MQTT_initialize( &aSystem );
-    Database_initialize( &aSystem );
+    if (aSystem.logToDatabase)
+        Database_initialize( &aSystem );
+    if (aSystem.sendToHomeAssistant)
+        HomeAssistant_initialize( &aSystem );
     
-    if (!openWeatherStation()) {
+    if (openWeatherStation() == 0) {
         Logger_LogFatal( "Unable to open the weather station port. Shutting down.\n" );
         MQTT_teardown();
-        Database_closeDatabase();
+        if (aSystem.logToDatabase)
+            Database_closeDatabase();
         exit( 0 );
     }
 
@@ -673,7 +691,7 @@ int main(int argc, char** argv)
         if (takeReading( ws2308, &dailyData[ numDailyReadings ] ) ) {
 
             readingMakesSense = TRUE;
-            if (aSystem.discardBadReadings && !readingIsValid( &dailyData[ numDailyReadings ], weatherStatsPtr ))
+            if (discardBadReadings && !readingIsValid( &dailyData[ numDailyReadings ], weatherStatsPtr ))
                 readingMakesSense = FALSE;
 
             if (readingMakesSense) {
@@ -681,6 +699,9 @@ int main(int argc, char** argv)
                     Database_insertReadingsRecord( &aSystem, &dailyData[ numDailyReadings ] );
                 if (aSystem.logToMQTT)
                     MQTT_createWeatherStatus( &aSystem, &dailyData[ numDailyReadings ] );
+                if (aSystem.sendToHomeAssistant)
+                    HomeAssistant_sendData( &aSystem, &dailyData[ numDailyReadings ] );
+                
                 
                 //
                 // Check to see if any thresholds are exceeded, if so - publish alarm event
@@ -712,6 +733,7 @@ int main(int argc, char** argv)
     closeWeatherStation();
     teardownStatsModule( weatherStatsPtr );
     MQTT_teardown();
-    Database_closeDatabase();
+    if (aSystem.logToDatabase)
+        Database_closeDatabase();
     Logger_Terminate();
 }

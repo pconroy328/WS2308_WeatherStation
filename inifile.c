@@ -4,7 +4,7 @@
 #include <sys/stat.h>
 
 #include "configIO.h"
-#include "logger.h"
+#include "log4c.h"
 #include "ws_structs.h"
 
 

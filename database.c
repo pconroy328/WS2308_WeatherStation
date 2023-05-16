@@ -19,11 +19,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+// #include <mysql/mysql.h>
 #include <mariadb/mysql.h>
 
 
 #include "database.h"
-#include "logger.h"
+#include "log4c.h"
 #include "ws_structs.h"
 
 

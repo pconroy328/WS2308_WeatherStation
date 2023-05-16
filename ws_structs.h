@@ -67,6 +67,8 @@ typedef struct WS2308System {
     double          absPressureCorrection;
     int             ignoreAtomicClock;
     
+    int             sendToHomeAssistant;
+    
     int             logToMQTT;
     int             logToDatabase;
 
