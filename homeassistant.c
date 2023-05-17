@@ -304,7 +304,7 @@ const int   createConfigMsg_PressureOutdoor (char *configMsg, const int bufSize,
                         "\"state_topic\":\"WS2308/STATUS\","
     
                         "\"unique_id\":\"LaCrosse-WS2310-%d_pressure_outdoor\","
-                        "\"unit_of_measurement\":\"in Hg\", \"value_template\":\"{{ value_json.outdoorPressure}}\"}";
+                        "\"unit_of_measurement\":\"inHg\", \"value_template\":\"{{ value_json.outdoorPressure}}\"}";
 
     int num = snprintf( configMsg, bufSize,
                     configTemplate,
@@ -348,7 +348,7 @@ const int   createConfigMsg_WindchillOutdoor (char *configMsg, const int bufSize
                         "\"state_topic\":\"WS2308/STATUS\","
     
                         "\"unique_id\":\"LaCrosse-WS2310-%d_windchill_outdoor\","
-                        "\"unit_of_measurement\":\"°F\", \"value_template\":\"{{ value_json.outdoorWindchill}}\"}";
+                        "\"unit_of_measurement\":\"°F\", \"value_template\":\"{{ value_json.outdoorWindChill}}\"}";
 
     int num = snprintf( configMsg, bufSize,
                     configTemplate,
@@ -484,14 +484,14 @@ const int   createConfigMsg_RainLastHour (char *configMsg, const int bufSize, in
                         "\"device\":{ \"identifiers\":[ \"LaCrosse-WS2310-%d\" ],"
                         "\"manufacturer\":\"LaCrosse\", \"model\":\"Weather Station\", "
                         "\"name\":\"LaCrosse-WS2310-%d\" },"
-                        "\"device_class\":\"speed\", \"enabled_by_default\":true, \"expire_after\" : 3600, \"force_update\" : true,"
+                        "\"device_class\":\"precipitation_intensity\", \"enabled_by_default\":true, \"expire_after\" : 3600, \"force_update\" : true,"
                         "\"name\":\"Weather Station %d rain last hour\", \"state_class\":\"measurement\","
     
                         "\"state_topic\":\"WS2308/STATUS\","
     
     
                         "\"unique_id\":\"LaCrosse-WS2310-%d_rain_last_hour\","
-                        "\"unit_of_measurement\":\"in\", \"value_template\":\"{{ value_json.rainLastHour}}\"}";
+                        "\"unit_of_measurement\":\"in/h\", \"value_template\":\"{{ value_json.rainLastHour}}\"}";
 
     int num = snprintf( configMsg, bufSize,
                     configTemplate,
@@ -526,14 +526,14 @@ const int   createConfigMsg_RainLastDay (char *configMsg, const int bufSize, int
                         "\"device\":{ \"identifiers\":[ \"LaCrosse-WS2310-%d\" ],"
                         "\"manufacturer\":\"LaCrosse\", \"model\":\"Weather Station\", "
                         "\"name\":\"LaCrosse-WS2310-%d\" },"
-                        "\"device_class\":\"speed\", \"enabled_by_default\":true, \"expire_after\" : 3600, \"force_update\" : true,"
+                        "\"device_class\":\"precipitation_intensity\", \"enabled_by_default\":true, \"expire_after\" : 3600, \"force_update\" : true,"
                         "\"name\":\"Weather Station %d rain last day\", \"state_class\":\"measurement\","
     
                         "\"state_topic\":\"WS2308/STATUS\","
     
     
                         "\"unique_id\":\"LaCrosse-WS2310-%d_rain_last_day\","
-                        "\"unit_of_measurement\":\"in\", \"value_template\":\"{{ value_json.rainLastDay}}\"}";
+                        "\"unit_of_measurement\":\"in/d\", \"value_template\":\"{{ value_json.rainLastDay}}\"}";
 
     int num = snprintf( configMsg, bufSize,
                     configTemplate,
@@ -568,7 +568,7 @@ const int   createConfigMsg_RainTotal (char *configMsg, const int bufSize, int s
                         "\"device\":{ \"identifiers\":[ \"LaCrosse-WS2310-%d\" ],"
                         "\"manufacturer\":\"LaCrosse\", \"model\":\"Weather Station\", "
                         "\"name\":\"LaCrosse-WS2310-%d\" },"
-                        "\"device_class\":\"speed\", \"enabled_by_default\":true, \"expire_after\" : 3600, \"force_update\" : true,"
+                        "\"device_class\":\"precipitation\", \"enabled_by_default\":true, \"expire_after\" : 3600, \"force_update\" : true,"
                         "\"name\":\"Weather Station %d rain total\", \"state_class\":\"measurement\","
     
                         "\"state_topic\":\"WS2308/STATUS\","
