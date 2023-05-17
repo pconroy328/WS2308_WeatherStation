@@ -68,7 +68,7 @@ static  weatherStats_t      *weatherStatsPtr;
 static  unsigned long       numDailyReadings;
 static  unsigned long       numTotalReadings;
 static  int                 cacheReadings = FALSE;
-static  int                 useJSON = FALSE;
+static  int                 useJSON = TRUE;
 
 //
 //  Those variables that can be set by the INI file are global to make things easier.
@@ -642,19 +642,18 @@ int main(int argc, char** argv)
     aSystem.readInterval = 16;
     aSystem.discardBadReadings = TRUE;
     aSystem.ignoreAtomicClock = FALSE;
-    aSystem.MQTTUseJSON = FALSE;
+    aSystem.MQTTUseJSON = TRUE;
     aSystem.MQTTUseISO8601 = TRUE;
-    
+    aSystem.logToMQTT = TRUE;
+    aSystem.sendToHomeAssistant = TRUE;
+    aSystem.logToDatabase = FALSE;
+
     absPressureCorrection = -3.0;
     strncpy( &(aSystem.logFileName[ 0 ]), "/tmp/ws2308.log", sizeof aSystem.logFileName );
-    aSystem.logToMQTT = TRUE;
-    
     
     MQTT_setDefaults( &aSystem, aSystem.MQTTServerName );
     Database_setDefaults( &aSystem );
     
-    aSystem.sendToHomeAssistant = FALSE;
-    aSystem.logToDatabase = FALSE;
 
    
     //
